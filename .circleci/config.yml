@@ -5,11 +5,12 @@ jobs:
       - image: circleci/python:3.6.9
     steps:
       - checkout
+      
       - run:
          command: |
              echo Deploy
-             echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDchZmVKY9MJLb4/r+OYPX1juPFWzu6vhNIX1xsY2gtrgqA/Ayn9hJxMaiTfYOaLc8WLyPkSWuO95bxZC3PTN0BjiuJbkq00HWGN2KZhme0RamHJwYUmJTqP3h6bZ8X1wJHn7L0EK3cMXV8RoOTPIRlGkhHIY6W83pULQ1UvyNmeqYYwVPVBYPixD3HIt/A8/vcTVuuO1afcA26rICkMp2BDmUMqqPED9QQ3IbKBSg/jJluzVNO1YCiPHKqorDf4OnXZ+0MHUL9GjZpe2nZWZQmzDXGHlydGuls4S+7VVN49HVkpsxp8ctpkitBpYnClHBTr7hJ3sPeGAiy5IJzmxgt root@thecat-api-lab' >> ~/.ssh/known_hosts
-             ssh  $DROPLET_USER@$DROPLET_IP "cd /opt/thecatapi-lab && docker-compose build && docker-compose up -d"
+             ssh -o StrictHostKeyChecking=no root@206.81.10.131 "ls -l"
+             #ssh  $DROPLET_USER@$DROPLET_IP "cd /opt/thecatapi-lab && docker-compose build && docker-compose up -d"
 
 workflows:
   deploy:
