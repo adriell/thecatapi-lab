@@ -3,8 +3,9 @@ version: 2
 
 jobs:
   deploy:
-    steps:
-      - run: ssh -v $DROPLET_USER@$DROPLET_IP "cd /opt/thecatapi-lab && docker-compose build && docker-compose up -d"
+    docker:
+      steps:
+         - run: ssh -v $DROPLET_USER@$DROPLET_IP "cd /opt/thecatapi-lab && docker-compose build && docker-compose up -d"
 
 workflows:
   main:
