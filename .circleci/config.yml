@@ -13,7 +13,7 @@ jobs:
       - run:
          command: |
              echo Deploy
-             echo -e "Host gitlab.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+             echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
              ssh -v $DROPLET_USER@$DROPLET_IP "cd /opt/thecatapi-lab && docker-compose build && docker-compose up -d"
 
 workflows:
