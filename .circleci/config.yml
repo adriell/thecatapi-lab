@@ -4,7 +4,10 @@ jobs:
     docker:
       - image: circleci/python:3.6.9
     steps:
-      - checkout 
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+             - 1b:49:ae:52:03:d6:99:ad:a6:37:e4:e1:cd:fc:d0:e6 
       - run:
          command: |
              ssh  "$DROPLET_USER"@"$DROPLET_IP" "cd /opt/thecatapi-lab && docker-compose build && docker-compose up -d"
