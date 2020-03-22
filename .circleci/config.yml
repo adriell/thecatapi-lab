@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   jira: circleci/jira@volatile
 jobs:
-  build:
+  deploy:
     docker:
       - image: circleci/node:carbon
     steps:
