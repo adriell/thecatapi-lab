@@ -1,13 +1,15 @@
 version: 2.1
-
+orbs:
+  jira: circleci/jira@volatile
 jobs:
-  deploy:
+  build:
     docker:
-      steps:
-         - run:
-             command: |
-                echo Deploy
-                ssh -v $DROPLET_USER@$DROPLET_IP "cd /opt/thecatapi-lab && docker-compose build && docker-compose up -d"
+      - image: circleci/node:carbon
+    steps:
+      - run:
+         command: |
+             echo Deploy
+             ssh -v $DROPLET_USER@$DROPLET_IP "cd /opt/thecatapi-lab && docker-compose build && docker-compose up -d"
 
 workflows:
   main:
