@@ -4,6 +4,9 @@ from pymongo import MongoClient
 from logging.config import dictConfig
 import bcrypt
 import requests
+from flask_prometheus_metrics import register_metrics
+
+
 dictConfig({
     'version': 1,
     'formatters': {'default': {
@@ -44,6 +47,10 @@ def cats():
 @app.route('/breeds/images', methods=["GET"])
 def images():
     response = requests.get("https://api.thecatapi.com/v1/images/search" )
+
+
+#Register Metrics
+register_metrics(app)
     
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

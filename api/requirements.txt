@@ -3,3 +3,4 @@ flask_restful
 bcrypt
 pymongo
 requests
+flask_prometheus_metrics[flask]
