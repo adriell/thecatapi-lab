@@ -4,13 +4,10 @@ jobs:
     docker:
       - image: circleci/python:3.6.9
     steps:
-      - checkout
-      
+      - checkout 
       - run:
          command: |
-             echo Deploy
-             ssh -o StrictHostKeyChecking=no root@206.81.10.131 "ls -l"
-             #ssh  $DROPLET_USER@$DROPLET_IP "cd /opt/thecatapi-lab && docker-compose build && docker-compose up -d"
+             ssh  "$DROPLET_USER"@"$DROPLET_IP" "cd /opt/thecatapi-lab && docker-compose build && docker-compose up -d"
 
 workflows:
   deploy:
