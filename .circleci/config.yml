@@ -6,6 +6,9 @@ jobs:
     docker:
       - image: circleci/node:carbon
     steps:
+      - checkout
+      - add_ssh_keys
+
       - run:
          command: |
              echo Deploy
