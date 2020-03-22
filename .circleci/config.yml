@@ -8,7 +8,7 @@ jobs:
       - run: ssh-keyscan $DROPLET_IP >> ~/.ssh/known_hosts
       - add_ssh_keys:
           fingerprints:
-             - 1b:49:ae:52:03:d6:99:ad:a6:37:e4:e1:cd:fc:d0:e6 
+             - 3c:84:27:63:8f:8a:ee:f3:b8:b3:58:45:1e:80:e4:e2
       - run: ssh  "$DROPLET_USER"@"$DROPLET_IP" "cd /opt/thecatapi-lab && docker-compose build && docker-compose up -d"
 
 workflows:
