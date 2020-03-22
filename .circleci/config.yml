@@ -1,10 +1,6 @@
 version: 2.1
-orbs:
-  jira: circleci/jira@volatile
 jobs:
   deploy:
-    docker:
-      - image: circleci/node:carbon
     steps:
       - checkout
       - add_ssh_keys:
