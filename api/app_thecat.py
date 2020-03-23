@@ -23,6 +23,12 @@ client = MongoClient("mongodb://db:27017")
 db = client.thecatsDB
 breeds = db["breeds"]
 
+def verifyBreed(breed):
+    if breeds.find({"Name": name}).count() == 0:
+        return False
+    else:
+        return True
+
 @app.route('/breeds', methods=["GET"])
 def cats():
 
@@ -42,6 +48,29 @@ def cats():
 def images():
     response = requests.get("https://api.thecatapi.com/v1/images/search" )
     return "It works"
+
+@app.route('/breedscat', methods=["GET"])
+def breeds():
+    breeds_cat = breeds.find()
+    print (breeds_cat)
+    
+    #get breeds
+    result = {
+        "status": 200,
+        "result": breeds_cat
+    }
+    return jsonify(result)
+@app.route('/breedinfo')
+def post():
+    data = request.get_json()
+    breed = data["_id"]
+    
+    r = breeds.find({"_id": breed})
+    restJson = {
+        "status": 200,
+        "obj": r
+    }
+    return jsonify(restJson)
 
 @app.route('/metrics', methods=['GET'])
 def get_data():
