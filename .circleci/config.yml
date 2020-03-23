@@ -1,17 +1,13 @@
-version: 2.1
+version: 2
 jobs:
-  deploy:
+  build:
     docker:
       - image: circleci/python:3.6.9
     steps:
       - checkout
-      - run: ssh-keyscan $DROPLET_IP >> ~/.ssh/known_hosts
-      - add_ssh_keys:
-          fingerprints:
-             - 3c:84:27:63:8f:8a:ee:f3:b8:b3:58:45:1e:80:e4:e2
-      - run: ssh  "$DROPLET_USER"@"$DROPLET_IP" "cd /opt/thecatapi-lab && docker-compose build && docker-compose up -d"
+      - run: docker-compose build
 
 workflows:
   deploy:
     jobs:
-      - deploy
+      - build

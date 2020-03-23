@@ -1,19 +1,14 @@
 from flask import Flask, send_file, jsonify, request, Response
 from flask_restful import Api, Resource
-from prometheus_client import start_http_server, Counter, generate_latest, Gauge
 from pymongo import MongoClient
 import bcrypt
 import requests
 import docker
-
 import logging
 
  
 logger = logging.getLogger(__name__)
 app = Flask(__name__)
-CONTENT_TYPE_LATEST = str('text/plain; version=0.0.4; charset=utf-8')
-
-number_requests = Counter('num_requests', 'The numer of requests')
 
 url = "https://api.thecatapi.com/v1/breeds"
 headers = {'x-api-key': '41c95355-4fcc-499d-a0c7-a56c6b6ceefd'}
@@ -53,8 +48,6 @@ def images():
 def breeds():
     breeds_cat = breeds.find()
     print (breeds_cat)
-    
-    #get breeds
     result = {
         "status": 200,
         "result": breeds_cat
@@ -72,9 +65,5 @@ def post():
     }
     return jsonify(restJson)
 
-@app.route('/metrics', methods=['GET'])
-def get_data():
-    number_requests.inc()
-    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

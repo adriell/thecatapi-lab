@@ -34,18 +34,7 @@ services:
       - elasticsearch
     ports:
       - 5601:5601
-  #logstash: 
-  #  hostname: logstash 
-  #  image: logstash:6.5.2
-  #  build:
-  #    context: docker-logs/logstash
-  #    dockerfile: Dockerfile
-  #  ports:
-  #    - 5044:5044
-  #  environment:
-  #    LOG_LEVEL: error
-  #  links:
-  #    - elasticsearch
+
   elasticsearch:
     hostname: elasticsearch
     image: elasticsearch:6.5.2
@@ -72,39 +61,3 @@ services:
       - "HOST_KIBANA=kibana:5601"
     depends_on:
       - elasticsearch
-  #
-  #prometheus:
-  #  hostname: prometheus
-  #  image: prom/prometheus:latest
-  #  build:
-  #    context: monitoring/prometheus
-  #    dockerfile: Dockerfile
-  #  ports:
-  #    - 9090:9090
-  #  links:
-  #    - api
-  #  depends_on:
-  #   - cadvisor
-  #grafana:
-  #  image: grafana/grafana
-  #  user: "104"
-  #  depends_on:
-  #    - prometheus
-  #  ports:
-  #    - 3000:3000
-  #  volumes:
-  #    - ./monitoring/grafana/provisioning/:/etc/grafana/provisioning/
-  #  env_file:
-  #    - ./monitoring/grafana/config.monitoring
-#
-  #cadvisor:
-  #  image: google/cadvisor:latest
-  #  container_name: cadvisor
-  #  ports:
-  #    - 8080:8080
-  #  volumes:
-  #    - /:/rootfs:ro
-  #    - /var/run:/var/run:rw
-  #    - /sys:/sys:ro
-  #    - /var/lib/docker:/var/lib/docker:ro
-#
