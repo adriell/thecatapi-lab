@@ -1,11 +1,14 @@
-version: 2
+version: 2.1
 jobs:
   build:
     docker:
       - image: circleci/python:3.6.9
     steps:
       - checkout
-      - run: docker-compose build
+      - run: 
+          name: docker compose build
+          command: |
+              ssh root@206.81.10.131 "cd /opt/thecatapi-lab/ %% docker-compose build"
 
 workflows:
   deploy:
