@@ -1,27 +1,19 @@
-from flask import Flask, jsonify
+from flask import Flask, send_file, jsonify, request, Response
 from flask_restful import Api, Resource
+from prometheus_client import start_http_server, Counter, generate_latest, Gauge
 from pymongo import MongoClient
-from logging.config import dictConfig
 import bcrypt
 import requests
-from flask_prometheus_metrics import register_metrics
+import docker
 
+import logging
 
-dictConfig({
-    'version': 1,
-    'formatters': {'default': {
-        'format': '[%(asctime)s] %(levelname)s in %(module)s: %(message)s',
-    }},
-    'handlers': {'wsgi': {
-        'class': 'logging.StreamHandler',
-        'formatter': 'default'
-    }},
-    'root': {
-        'level': 'DEBUG',
-        'handlers': ['wsgi']
-    }
-})
+ 
+logger = logging.getLogger(__name__)
 app = Flask(__name__)
+CONTENT_TYPE_LATEST = str('text/plain; version=0.0.4; charset=utf-8')
+
+number_requests = Counter('num_requests', 'The numer of requests')
 
 url = "https://api.thecatapi.com/v1/breeds"
 headers = {'x-api-key': '41c95355-4fcc-499d-a0c7-a56c6b6ceefd'}
@@ -33,6 +25,7 @@ breeds = db["breeds"]
 
 @app.route('/breeds', methods=["GET"])
 def cats():
+
     response = requests.get(url, headers=headers)
     r = response.json()
     for i in range(len(r)):
@@ -43,14 +36,16 @@ def cats():
             "Description": r[i]['description']
         })
     
-    return response.text
+    return "It works!"
+
 @app.route('/breeds/images', methods=["GET"])
 def images():
     response = requests.get("https://api.thecatapi.com/v1/images/search" )
+    return "It works"
 
-
-#Register Metrics
-register_metrics(app)
-    
+@app.route('/metrics', methods=['GET'])
+def get_data():
+    number_requests.inc()
+    return Response(generate_latest(), mimetype=CONTENT_TYPE_LATEST)
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)

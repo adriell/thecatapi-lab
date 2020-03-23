@@ -1,6 +1,7 @@
 Flask
 flask_restful
+prometheus_client
+docker
 bcrypt
 pymongo
 requests
-flask_prometheus_metrics[flask]
