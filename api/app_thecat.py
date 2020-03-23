@@ -1,6 +1,8 @@
 from flask import Flask, send_file, jsonify, request, Response
 from flask_restful import Api, Resource
 from pymongo import MongoClient
+from bson import json_util
+import json
 import bcrypt
 import requests
 import docker
@@ -39,20 +41,10 @@ def cats():
     
     return "It works!"
 
-@app.route('/breeds/images', methods=["GET"])
-def images():
-    response = requests.get("https://api.thecatapi.com/v1/images/search" )
-    return "It works"
-
 @app.route('/breedscat', methods=["GET"])
 def breeds():
-    breeds_cat = breeds.find()
-    print (breeds_cat)
-    result = {
-        "status": 200,
-        "result": breeds_cat
-    }
-    return jsonify(result)
+    breeds_cat = list(db.breeds.find())
+    return json.dumps(breeds_cat, default=json_util.default)
 @app.route('/breedinfo')
 def post():
     data = request.get_json()
