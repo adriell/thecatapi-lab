@@ -1,0 +1,30 @@
+metricbeat.modules:
+
+- module: mongodb
+  enabled: true
+  metricsets: ["status", "dbstats"]
+  period: 5s
+  hosts: ["mongodb:27017"]
+
+- module: http
+  metricsets: ["server"]
+  host: "api"
+  port: "5000"
+
+
+output.elasticsearch:
+  hosts: ["elasticsearch:9200"]
+
+setup.kibana:
+  host: "kibana:5601"
+
+setup.dashboards.enabled: true
+
+logging.level: warning
+logging.to_files: true
+logging.to_syslog: false
+logging.files:
+  path: /var/log/metricbeat
+  name: metricbeat.log
+  keepfiles: 2
+  permissions: 0644

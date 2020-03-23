@@ -60,7 +60,17 @@ services:
         hard: -1
     ports:
       - 9200:9200
-
+  metricbeat:
+    build: 
+      context: monitoring/metricbeat
+      dockerfile: Dockerfile
+    environment:
+      - "WAIT_FOR_HOSTS=elasticsearch:9200 kibana:5601"
+      - "HOST_ELASTICSEARCH=elasticsearch:9200"
+      - "HOST_KIBANA=kibana:5601"
+    depends_on:
+      - elasticsearch
+  
   prometheus:
     hostname: prometheus
     image: prom/prometheus:latest
