@@ -5,6 +5,9 @@ jobs:
       - image: circleci/python:3.6.9
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+              - "1b:49:ae:52:03:d6:99:ad:a6:37:e4:e1:cd:fc:d0:e6"
       - run: 
           name: docker compose build
           command: |
