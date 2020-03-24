@@ -11,11 +11,11 @@ jobs:
       - run:
           name: docker-compose-build
           command: |
-               ssh -o StrictHostKeyChecking=no root@206.81.10.131 "cd /opt/thecatapi-lab/ %% docker-compose build"
+               ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd /opt/thecatapi-lab/ %% docker-compose build"
       - run: 
          name: docker-compose-deploy
          command: 
-               ssh -o StrictHostKeyChecking=no root@206.81.10.131 "cd /opt/thecatapi-lab/ %% docker-compose up -d"
+               ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd /opt/thecatapi-lab/ %% docker-compose up -d"
                   
 
 workflows:
