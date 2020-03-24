@@ -1,6 +1,6 @@
-# The Cat API  - Implementação em flask python da api [TheCatAPI](https://thecatapi.com/)
+# Implementação em flask python da api The Cat API
 
-Essa é uma implementação de uma API RestFull utilizando a linguagem de programação python com o framework flask.
+Essa é uma implementação de uma API RestFull utilizando a linguagem de programação python com o framework flask, fazendo requests para o a API [TheCatAPI](https://thecatapi.com/).
 Está desenhada de acordo com o diagrama abaixo:
 ![Diagrama](images/diagrama.png)
 
@@ -104,6 +104,11 @@ Circleci
 ```
 Para fazer a integração e deploy contínuo, foi utilizado o circleci, por ser uma ferramenta já integrada com o github e não precisa montar uma nova infraestrutura para monitorar a API.
 
+### Banco de Dados
+
+O banco de dados utilizado para essa implementação é o MongoDB. Foi utilizado pois é um banco extremamente leve e fácil utilização, além de ser NoSQl.
+Segue o [link](https://www.mongodb.com/) para mais informações.
+
 ## Execução da API
 
 A construção da infraestrutura da API foi feita em cima de containers docker, provisionado pelo docker-compose, ferramentas essas que foram descritas anteriormente. Para iniciar a API, basta executar os comandos abaixo.
@@ -115,5 +120,20 @@ A aplicação irá executar na porta 5000 e para fazer o consumo da API, poderá
 
 ## Deploy
 
-O deploy é feito com CircleCI, quando for realizado push ou merge na master, automaticamente é disparado o job no circleci que faz o deploy em uma máquina da Digital Ocean
+O deploy é feito com CircleCI, quando for realizado push ou merge na master, automaticamente é disparado o job no circleci que faz o deploy em uma máquina da Digital Ocean.
+Abaixo as steps do deployment:
 
+![Deployment](images/deployment.png)
+
+## Observability
+
+Essa parte mostra o centralizamento de logs realizado pela estack de logs EFK (Elasticsearch, Logstash e Kibana) e o monitoramento da API realizado pelo metricbeat respectivamente
+
+
+### Centralização de Logs - EFK
+
+![Logs](images/logs.png)
+
+### Monitoramento de requests
+
+![Requests](images/requests.png)
