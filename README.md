@@ -127,7 +127,9 @@ Abaixo as steps do deployment:
 
 ## Observability
 
-Essa parte mostra o centralizamento de logs realizado pela estack de logs EFK (Elasticsearch, Logstash e Kibana) e o monitoramento da API realizado pelo metricbeat respectivamente
+Essa parte mostra o centralizamento de logs realizado pela estack de logs EFK (Elasticsearch, Logstash e Kibana) e o monitoramento da API realizado pelo metricbeat respectivamente.
+
+A URL de acesso é `http://localhost:5601`. Após acessar o link, será necessário adicionar os índices `metricbeat-*` e o `filebeat-*` no kibana começar visualizar as métricas.
 
 
 ### Centralização de Logs - EFK
