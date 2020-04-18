@@ -22,7 +22,7 @@ db = client.thecatsDB
 breeds = db["breeds"]
 
 class GetAllBreeds(Resource):
-    def post(self):
+    def get(self):
 
         response = requests.get(url, headers=headers)
         r = response.json()
@@ -37,9 +37,21 @@ class GetAllBreeds(Resource):
         return "It works!"
 
 class GetBreeds(Resource):
-    def post(self):
+    def get(self):
         breeds_cat = list(db.breeds.find())
         return json.dumps(breeds_cat, default=json_util.default)
+
+class GetOrigin(Resource):
+    def get(self):
+        breeds_cat = list(db.breeds.find({},{"Origin": 1}))
+        return json.dumps(breeds_cat, default=json_util.default)      
+
+class GetBreedsOrigin(Resource):
+    def post(self):
+        data = request.get_json()
+        breed = data["Origin"]
+        result = list(db.breeds.find({"Origin": breed }))
+        return json.dumps(result, default=json_util.default)
 
 class GetBreed(Resource):
     def post(self):
@@ -48,9 +60,19 @@ class GetBreed(Resource):
         result = list(db.breeds.find({"Name": breed}))
         return json.dumps(result, default=json_util.default)
 
+class GetTemperament(Resource):
+    def post(self):
+        data = request.get_json()
+        breed = data["Temperament"]
+        result = list(db.breeds.find({"Temperament": breed}))
+        return json.dumps(result, default=json_util.default)
+
 api.add_resource(GetAllBreeds, '/')
 api.add_resource(GetBreeds, '/breeds')
+api.add_resource(GetBreedsOrigin, '/breedsorigin')
+api.add_resource(GetOrigin, '/origin')
 api.add_resource(GetBreed, '/breed')
+api.add_resource(GetTemperament, '/temperament')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
