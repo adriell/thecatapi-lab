@@ -7,6 +7,7 @@ import bcrypt
 import requests
 import docker
 import logging
+from bson.json_util import dumps
 
  
 logger = logging.getLogger(__name__)
@@ -64,15 +65,15 @@ class GetTemperament(Resource):
     def post(self):
         data = request.get_json()
         breed = data["Temperament"]
-        result = list(db.breeds.find({"Temperament": breed}))
+        result = list(db.breeds.find({"Temperament": { "$regex": breed }}))
         return json.dumps(result, default=json_util.default)
 
 api.add_resource(GetAllBreeds, '/')
-api.add_resource(GetBreeds, '/breeds')
-api.add_resource(GetBreedsOrigin, '/breedsorigin')
+api.add_resource(GetBreeds, '/breeds') #Lista todas Raças
+api.add_resource(GetBreedsOrigin, '/breedsorigin') #Lista as raças a partir do da origem
 api.add_resource(GetOrigin, '/origin')
-api.add_resource(GetBreed, '/breed')
-api.add_resource(GetTemperament, '/temperament')
+api.add_resource(GetBreed, '/breed') #Lista informações de uma raça
+api.add_resource(GetTemperament, '/temperament') #Lista as raças a partir do temperamento
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
