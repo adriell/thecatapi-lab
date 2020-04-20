@@ -13,3 +13,9 @@ scrape_configs:
   scrape_interval: 5s
   static_configs:
   - targets: ['api:5000']
+
+- job_name: api-thecats-collector
+  scrape_interval: 5s
+  static_configs:
+  - targets: ['collector:8000']
+

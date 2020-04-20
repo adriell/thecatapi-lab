@@ -1,6 +1,6 @@
 Flask
 flask_restful
-prometheus_client
+flask_restful_swagger
 docker
 bcrypt
 pymongo

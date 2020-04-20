@@ -10,10 +10,51 @@ services:
     build: "./db"
     ports:
       - "27017:27017"
+  collector:
+    hostname: collector
+    build: "./monitoring/collector"
+    ports:
+      - "8000:8000"
+    links:
+      - api
+      - prometheus
+
+  prometheus:
+    hostname: prometheus
+    image: prom/prometheus:latest
+    build: "./monitoring/prometheus"
+    ports:
+      - 9090:9090
+    links:
+      - api
+    depends_on:
+     - cadvisor
+  grafana:
+    image: grafana/grafana
+    user: "104"
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - ./monitoring/grafana/provisioning/:/etc/grafana/provisioning/
+    env_file:
+      - ./monitoring/grafana/config.monitoring
+
+  cadvisor:
+    image: google/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - 8080:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
 
   filebeat:
     hostname: filebeat
-    image: filebeat:6.5.2
+    image: filebeat:6.5.2 
     build:
       context: docker-logs/filebeat
       dockerfile: Dockerfile
@@ -51,13 +92,13 @@ services:
         hard: -1
     ports:
       - 9200:9200
-  metricbeat:
-    build: 
-      context: monitoring/metricbeat
-      dockerfile: Dockerfile
-    environment:
-      - "WAIT_FOR_HOSTS=elasticsearch:9200 kibana:5601"
-      - "HOST_ELASTICSEARCH=elasticsearch:9200"
-      - "HOST_KIBANA=kibana:5601"
-    depends_on:
-      - elasticsearch
+  #metricbeat:
+  #  build: 
+  #    context: monitoring/metricbeat
+  #    dockerfile: Dockerfile
+  #  environment:
+  #    - "WAIT_FOR_HOSTS=elasticsearch:9200 kibana:5601"
+  #    - "HOST_ELASTICSEARCH=elasticsearch:9200"
+  #    - "HOST_KIBANA=kibana:5601"
+  #  depends_on:
+  #    - elasticsearch

@@ -2,7 +2,6 @@
 from flask import Flask, request, Response, jsonify
 from flask_restful import Api, Resource
 from flask_restful_swagger import swagger
-
 from pymongo import MongoClient
 import bcrypt
 import requests
@@ -16,7 +15,7 @@ api = swagger.docs(Api(app), apiVersion='0.1',
 
 url = "https://api.thecatapi.com/v1/breeds"
 headers = {'x-api-key': '41c95355-4fcc-499d-a0c7-a56c6b6ceefd'}
-client = MongoClient("mongodb://localhost:27017")
+client = MongoClient("mongodb://db:27017")
 
 
 db = client.thecatsdb
